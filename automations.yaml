@@ -1,0 +1,150 @@
+- id: '1579834194176'
+  alias: Nyomógomb piros TV ki
+  description: TV KIKAPCSOLÁS
+  trigger:
+  - payload: 'Gomb helyzete: Gomb 1 Megnyomva'
+    platform: mqtt
+    topic: nyomogomb1
+  condition: []
+  action:
+  - service: rest_command.philipstv_ki
+- id: '1579834925091'
+  alias: Nyomógomb fehér TV be
+  description: ''
+  trigger:
+  - payload: 'Gomb helyzete: Gomb 2 Megnyomva'
+    platform: mqtt
+    topic: nyomogomb2
+  condition: []
+  action:
+  - data:
+      mac: 64:6e:69:4a:5d:4e
+    service: wake_on_lan.send_magic_packet
+- id: '1581523028695'
+  alias: HANG Hálószoba lámpa BE-KI
+  description: ''
+  trigger:
+  - entity_id: switch.haloszoba_lampa
+    from: 'on'
+    platform: state
+    to: 'off'
+  condition: []
+  action:
+  - data:
+      message: Hálószoba lámpa lekapcsolva.
+    service: notify.test
+- id: '1581523076037'
+  alias: HANG Hálószoba lámpa KI-BE
+  description: ''
+  trigger:
+  - entity_id: switch.haloszoba_lampa
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - data:
+      message: Hálószoba lámpa bekapcsolva.
+    service: notify.test
+- id: '1581542493756'
+  alias: Hálószoba lámpa lekapcsolásakor 10 másopdpercre a LED szalag bekapcsol
+  description: ''
+  trigger:
+  - entity_id: switch.haloszoba_lampa
+    from: 'on'
+    platform: state
+    to: 'off'
+  condition:
+  - condition: state
+    entity_id: switch.haloszoba_led_szalag
+    state: 'off'
+  - after: '19:00:00'
+    before: '10:00:00'
+    condition: time
+  action:
+  - entity_id: switch.haloszoba_led_szalag
+    service: switch.turn_on
+  - delay: 00:00:10
+  - entity_id: switch.haloszoba_led_szalag
+    service: switch.turn_off
+- id: '1581648039351'
+  alias: Melegítő 30 perc után kikapcsol
+  description: ''
+  trigger:
+  - entity_id: switch.melegito
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - delay: 0:30:00
+  - entity_id: switch.melegito
+    service: switch.turn_off
+- id: '1581814709139'
+  alias: 5:00-kor hálószoba lekapcsolása
+  description: ''
+  trigger:
+  - at: 05:00:00
+    platform: time
+  condition: []
+  action:
+  - data: {}
+    service: script.haloszoba_kikapcsolas
+- alias: HANG VLC Hálószoba lámpa BE-KI
+  description: ''
+  trigger:
+  - entity_id: switch.haloszoba_lampa
+    from: 'on'
+    platform: state
+    to: 'off'
+  condition: []
+  action:
+  - service: tts.google_say
+    entity_id: media_player.vlc_balazsnotebook
+    data_template:
+      message: Hello Good Morning
+  id: 2ade8142e7594e01afb9c53d11597fb7
+- id: '1582465798021'
+  alias: RFID nyomtató
+  description: ''
+  trigger:
+  - entity_id: sensor.rfid_olvaso
+    platform: state
+    to: Balázs
+  - entity_id: sensor.rfid_olvaso
+    platform: state
+    to: Réka
+  condition: []
+  action:
+  - data: {}
+    entity_id: switch.nyomtato
+    service: switch.toggle
+- id: '1583240233511'
+  alias: RFID olvasás sikertelen
+  description: ''
+  trigger:
+  - entity_id: sensor.rfid_olvaso
+    platform: state
+    to: Unknown
+  condition: []
+  action:
+  - data: {}
+    service: shell_command.sipolas
+  - data: {}
+    service: shell_command.sipolas
+  - data: {}
+    service: shell_command.sipolas
+- id: '1583241574928'
+  alias: RFID olvasás rendben
+  description: ''
+  trigger:
+  - entity_id: sensor.rfid_olvaso
+    platform: state
+    to: Balázs
+  - entity_id: sensor.rfid_olvaso
+    platform: state
+    to: Réka
+  condition: []
+  action:
+  - data: {}
+    service: shell_command.sipolas

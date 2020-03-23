@@ -1,0 +1,11 @@
+views:
+  title: ESXi                                    ## CHANGE NEEDED
+  cards:
+    - type: custom:decluttering-card
+      template: vm_flex_template
+      variables:
+        - entity: sensor.esxi_vm_hassio ## CHANGE NEEDED
+        - name: Hassio VM                                ## CHANGE NEEDED 
+                                                      ### In the example picture this is  
+                                                      ### seen as 'DKR02' at the bottom 
+                                                      ### of the card

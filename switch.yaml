@@ -1,0 +1,59 @@
+##################################################################################
+#                                    MQTT                                        #
+
+### Nyomtató ###   
+  - platform: mqtt
+    name: "Nyomtató"
+    command_topic: "cmnd/nyomtato/POWER"
+    availability_topic: "tele/nyomtato/LWT"
+    state_topic: stat/nyomtato/POWER
+    payload_on: "ON"
+    payload_off: "OFF"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+    retain: false
+    optimistic: false
+### Melegítő ###
+  - platform: mqtt
+    name: "Melegítő"
+    command_topic: "cmnd/melegito/POWER"
+    availability_topic: "tele/melegito/LWT"
+    state_topic: stat/melegito/POWER
+    payload_on: "ON"
+    payload_off: "OFF"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+    retain: false
+    optimistic: false
+### Hálószoba lámpa ###
+  - platform: mqtt
+    name: "Hálószoba_lámpa"
+    command_topic: "cmnd/sonoffhaloszobalampa/POWER"
+    availability_topic: "tele/sonoffhaloszobalampa/LWT"
+    state_topic: stat/sonoffhaloszobalampa/POWER
+    payload_on: "ON"
+    payload_off: "OFF"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+    retain: false
+    optimistic: false
+    
+#                                                                                #
+##################################################################################
+
+
+
+##################################################################################
+#                                 COMMAND LINE                                   #
+
+### RESTFULL SWITCH ###
+  - platform: command_line
+    switches:
+      haloszoba_led_szalag:
+        command_on: "/usr/bin/curl -X GET http://192.168.0.245/on"
+        command_off: "/usr/bin/curl -X GET http://192.168.0.245/off"
+        
+
+#                                                                                #
+##################################################################################
+

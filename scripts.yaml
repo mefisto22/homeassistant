@@ -1,0 +1,24 @@
+haloszoba_kikapcsolas:
+  alias: Hálószoba minden kikapcsolás
+  sequence:
+  - data:
+      content_type: application/json; charset=utf-8
+      method: POST
+      payload: '{ "key" : "Standby" }'
+      url: http://192.168.0.107:1925/6/input/key
+    entity_id: switch.haloszoba_led_szalag
+    service: rest_command.philipstv_ki
+  - entity_id: switch.haloszoba_led_szalag
+    service: switch.turn_off
+  - entity_id: switch.haloszoba_lampa
+    service: switch.turn_off
+  - entity_id: switch.melegito
+    service: switch.turn_off
+philips_tv_ebresztes:
+  alias: Philips TV ébresztés
+  sequence:
+  - service: shell_command.tv_ebresztes
+philips_tv_kikapcsolas:
+  alias: Philips TV kikapcsolása
+  sequence:
+  - service: rest_command.philipstv_ki

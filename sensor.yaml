@@ -1,0 +1,271 @@
+# TORRENT ########################################################
+  - platform: qbittorrent
+    url: !secret qbittorrent_ip
+    username: !secret torrent_username
+    password: !secret torrent_jelszo
+
+
+# WAZE TRAVEL TIME ###############################################
+  - platform: waze_travel_time
+    name: Munka
+    origin: !secret munka_origin
+    destination: !secret munka_destination
+    region: 'EU'
+  - platform: waze_travel_time
+    name: Ada
+    origin: !secret ada_origin
+    destination: !secret ada_destination
+    region: 'EU'
+
+# ÁRFOLYAM #######################################################
+  - platform: alpha_vantage
+    api_key: !secret alpha_api
+    foreign_exchange:
+      - name: EUR-->HUF
+        from: EUR
+        to: HUF
+  - platform: alpha_vantage
+    api_key: !secret alpha_api
+    foreign_exchange:
+      - name: EUR-->RSD
+        from: EUR
+        to: RSD          
+
+
+
+# SYSINFO ########################################################
+  - platform: systemmonitor
+    resources:
+      - type: memory_free
+      - type: ipv4_address
+        arg: ens160
+      - type: load_15m
+      - type: disk_free
+      - type: swap_free
+      - type: processor_use
+
+      
+ 
+# DÁTUM ##########################################################
+  - platform: time_date
+    display_options:
+      - 'time'
+      - 'date'
+      - 'date_time'
+      - 'date_time_iso'
+      - 'time_date'
+      - 'time_utc'
+      - 'beat'
+ 
+
+
+# SZÉP KÁRTYA ################## #####################################
+  - platform: szep_kartya
+    card_number: !secret szepkartya
+    card_code: !secret szepkartya_telekod
+    name: SZÉP Kártya
+    scan_interval:
+      hours: 4
+
+          
+# TORRENT CUSTOM #####################################################           
+  - platform: template
+    sensors:
+      sensor_qbittorrent_status:
+        friendly_name: "Állapot"
+        value_template: >-
+          {% if is_state('sensor.qbittorrent_status', 'idle') %}
+            Üresjárat
+          {% else %}
+            Letöltés
+          {% endif %}
+          
+          
+          
+# PLEX CUSTOM ########################################################           
+  - platform: template
+    sensors:
+      sensor_plex_torokhome:
+        value_template: >-
+          {% if is_state('sensor.plex_torokhome', 'unknown') %}
+            0
+          {% elif is_state('sensor.plex_torokhome', '0') %}
+            0
+          {% elif is_state('sensor.plex_torokhome', '1') %}
+            1
+          {% elif is_state('sensor.plex_torokhome', '2') %}
+            2
+          {% elif is_state('sensor.plex_torokhome', '3') %}
+            3
+          {% elif is_state('sensor.plex_torokhome', '4') %}
+            4
+          {% elif is_state('sensor.plex_torokhome', '5') %}
+            5
+          {% else %}
+            Sok
+          {% endif %}       
+
+
+# ILO2 ##########################################################
+  - platform: hp_ilo
+    host: !secret ilo2_ip
+    username: !secret ilo2_username
+    password: !secret ilo2_jelszo
+    monitored_variables:
+      - name: Szerver név
+        sensor_type: server_name
+      - name: Szerver ki-be állapota
+        sensor_type: server_power_status
+      - name: Power readings
+        sensor_type: server_power_readings
+        unit_of_measurement: 'Watt'
+      - name: UID LED
+        sensor_type: server_uid_status 
+      - name: CPU fanspeed
+        sensor_type: server_health
+        unit_of_measurement: '%'
+        value_template: '{{ ilo_data.fans["Fan 1"].speed[0] }}'
+      - name: Server Health
+        sensor_type: server_health
+   
+
+# DNS LOOKUP ######################################################    
+  - platform: dnsip
+    hostname: !secret ddns_hostname
+    name: !secret ddns_nev
+  - platform: dnsip  
+    hostname: !secret sajat_domain
+    name: !secret sajat_domain_neve
+ 
+
+##################################################################################
+#                                    MQTT                                        #
+
+### Hőmérő kint ###
+  - platform: mqtt
+    name: "Kinti hőmérséklet"
+    state_topic: "tele/homerokint/SENSOR"
+    force_update: true
+    value_template: "{{ ((value_json['SI7021'].Temperature | float) - 1) | round(1) }}"
+    unit_of_measurement: "°C"
+  - platform: mqtt
+    name: "Kinti páratartalom"
+    state_topic: "tele/homerokint/SENSOR"
+    value_template: "{{value_json['SI7021'].Humidity }}"
+    unit_of_measurement: "%"    
+  - platform: mqtt
+    name: "Kinti hőmérő wifi jel"
+    state_topic: "tele/homerokint/STATE"
+    value_template: "{{ value_json.Wifi.RSSI }}"
+    unit_of_measurement: "%"
+    
+### Hőmérő Halószoba ###
+  - platform: mqtt
+    name: "Hálószoba hőmérséklet"
+    force_update: true
+    state_topic: "tele/melegito/SENSOR"
+    value_template: "{{ ((value_json['SI7021'].Temperature | float) - 0) | round(1) }}"
+    unit_of_measurement: "°C"
+  - platform: mqtt
+    name: "Hálószoba páratartalom"
+    state_topic: "tele/melegito/SENSOR"
+    value_template: "{{value_json['SI7021'].Humidity }}"
+    unit_of_measurement: "%"
+  - platform: mqtt
+    name: "Hálószoba hőmérő wifi jel"
+    state_topic: "tele/melegito/STATE"
+    value_template: "{{ value_json.Wifi.RSSI }}"
+    unit_of_measurement: "%"
+
+### Hőmérő Nappali ###
+  - platform: mqtt
+    name: "Nappali hőmérséklet"
+    force_update: true
+    state_topic: "tele/nyomtato/SENSOR"
+    value_template: "{{ ((value_json['SI7021'].Temperature | float) - 1) | round(1) }}"
+    unit_of_measurement: "°C"
+  - platform: mqtt
+    name: "Nappali páratartalom"
+    state_topic: "tele/nyomtato/SENSOR"
+    value_template: "{{value_json['SI7021'].Humidity }}"
+    unit_of_measurement: "%"
+  - platform: mqtt
+    name: "Nappali hőmérő wifi jel"
+    state_topic: "tele/nyomtato/STATE"
+    value_template: "{{ value_json.Wifi.RSSI }}"
+    unit_of_measurement: "%"
+    
+### RFID OLVASÓ ###
+  - platform: mqtt
+    name: "RFID olvasó"
+    state_topic: "esprfid/send"
+    value_template: "{{ value_json.username }}"
+    expire_after: 1
+
+
+### TESZT PANEL ###
+  - platform: mqtt
+    name: "DHT22 1 hőmérésklet"
+    force_update: true
+    state_topic: "tele/tesztpanel/SENSOR"
+    value_template: "{{value_json['AM2301-12'].Temperature | round(1) }}"
+    unit_of_measurement: "°C"
+  - platform: mqtt
+    name: "DHT22 1 páratartalom"
+    state_topic: "tele/tesztpanel/SENSOR"
+    value_template: "{{value_json['AM2301-12'].Humidity }}"
+    unit_of_measurement: "%"
+    
+  - platform: mqtt
+    name: "DHT22 2 hőmérséklet"
+    force_update: true
+    state_topic: "tele/tesztpanel/SENSOR"
+    value_template: "{{value_json['AM2301-13'].Temperature | round(1) }}"
+    unit_of_measurement: "°C"
+  - platform: mqtt
+    name: "DHT22 2 páratartalom"
+    state_topic: "tele/tesztpanel/SENSOR"
+    value_template: "{{value_json['AM2301-13'].Humidity }}"
+    unit_of_measurement: "%"
+    
+  - platform: mqtt
+    name: "BME280 1 hőmérséklet"
+    force_update: true
+    state_topic: "tele/tesztpanel/SENSOR"
+    value_template: "{{value_json['BME280-76'].Temperature | round(1) }}"
+    unit_of_measurement: "°C"
+  - platform: mqtt
+    name: "BME280 1 páratartalom"
+    state_topic: "tele/tesztpanel/SENSOR"
+    value_template: "{{value_json['BME280-76'].Humidity }}"
+    unit_of_measurement: "%"
+  - platform: mqtt
+    name: "BME280 1 légnyomás"
+    state_topic: "tele/tesztpanel/SENSOR"
+    value_template: "{{value_json['BME280-76'].Pressure }}"
+    unit_of_measurement: "hPa"
+
+  - platform: mqtt
+    name: "BME280 2 hőmérséklet"
+    force_update: true
+    state_topic: "tele/tesztpanel/SENSOR"
+    value_template: "{{value_json['BME280-77'].Temperature | round(1) }}"
+    unit_of_measurement: "°C"
+  - platform: mqtt
+    name: "BME280 2 páratartalom"
+    state_topic: "tele/tesztpanel/SENSOR"
+    value_template: "{{value_json['BME280-77'].Humidity }}"
+    unit_of_measurement: "%"
+  - platform: mqtt
+    name: "BME280 2 légnyomás"
+    state_topic: "tele/tesztpanel/SENSOR"
+    value_template: "{{value_json['BME280-77'].Pressure }}"
+    unit_of_measurement: "hPa"
+    
+  - platform: mqtt
+    name: "Tesztpanel wifi jel"
+    state_topic: "tele/tesztpanel/STATE"
+    value_template: "{{ value_json.Wifi.RSSI }}"
+    unit_of_measurement: "%"
+#                                                                                #
+##################################################################################

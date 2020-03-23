@@ -1,0 +1,165 @@
+# PHILIPS TV ###########################################################################
+
+philipstv_forras:
+    url: http://192.168.0.107:1925/6/input/key
+    method: POST
+    payload: '{ "key" : "Source" }'
+    content_type:  'application/json; charset=utf-8'
+    
+philipstv_ki:
+    url: http://192.168.0.107:1925/6/input/key
+    method: POST
+    payload: '{ "key" : "Standby" }'
+    content_type:  'application/json; charset=utf-8'
+    
+philipstv_vissza:
+    url: http://192.168.0.107:1925/6/input/key
+    method: POST
+    payload: '{ "key" : "Back" }'
+    content_type:  'application/json; charset=utf-8'
+    
+philipstv_home:
+    url: http://192.168.0.107:1925/6/input/key
+    method: POST
+    payload: '{ "key" : "Home" }'
+    content_type:  'application/json; charset=utf-8'
+    
+philipstv_hangfel:
+    url: http://192.168.0.107:1925/6/input/key
+    method: POST
+    payload: '{ "key" : "VolumeUp" }'
+    content_type:  'application/json; charset=utf-8'
+    
+philipstv_hangle:
+    url: http://192.168.0.107:1925/6/input/key
+    method: POST
+    payload: '{ "key" : "VolumeDown" }'
+    content_type:  'application/json; charset=utf-8'
+    
+philipstv_nemitas:
+    url: http://192.168.0.107:1925/6/input/key
+    method: POST
+    payload: '{ "key" : "Mute" }'
+    content_type:  'application/json; charset=utf-8'
+    
+philipstv_info:
+    url: http://192.168.0.107:1925/6/input/key
+    method: POST
+    payload: '{ "key" : "Info" }'
+    content_type:  'application/json; charset=utf-8'
+    
+philipstv_fel:
+    url: http://192.168.0.107:1925/6/input/key
+    method: POST
+    payload: '{ "key" : "CursorUp" }'
+    content_type:  'application/json; charset=utf-8'
+    
+philipstv_le:
+    url: http://192.168.0.107:1925/6/input/key
+    method: POST
+    payload: '{ "key" : "CursorDown" }'
+    content_type:  'application/json; charset=utf-8'
+    
+philipstv_jobbra:
+    url: http://192.168.0.107:1925/6/input/key
+    method: POST
+    payload: '{ "key" : "CursorRight" }'
+    content_type:  'application/json; charset=utf-8'
+    
+philipstv_balra:
+    url: http://192.168.0.107:1925/6/input/key
+    method: POST
+    payload: '{ "key" : "CursorLeft" }'
+    content_type:  'application/json; charset=utf-8'
+    
+philipstv_elfogadas:
+    url: http://192.168.0.107:1925/6/input/key
+    method: POST
+    payload: '{ "key" : "Confirm" }'
+    content_type:  'application/json; charset=utf-8'
+    
+philipstv_playpause:
+    url: http://192.168.0.107:1925/6/input/key
+    method: POST
+    payload: '{ "key" : "PlayPause" }'
+    content_type:  'application/json; charset=utf-8'
+    
+philipstv_beallitasok:
+    url: http://192.168.0.107:1925/6/input/key
+    method: POST
+    payload: '{ "key" : "Options" }'
+    content_type:  'application/json; charset=utf-8'
+    
+    
+# LED SZALAG HALOSZOBA #####################################################################
+#################################### 1 2
+ledszalad_haloszoba_be:
+  url: 'http://192.168.0.245/on'
+ledszalad_haloszoba_ki:
+  url: 'http://192.168.0.245/off'
+  
+#################################### 2 4
+ledszalad_haloszoba_piros:
+  url: 'http://192.168.0.245/red'
+ledszalad_haloszoba_zold:
+  url: 'http://192.168.0.245/green'
+ledszalad_haloszoba_kek:
+  url: 'http://192.168.0.245/blue'
+ledszalad_haloszoba_feher:
+  url: 'http://192.168.0.245/white'
+
+#################################### 3 4
+ledszalad_haloszoba_red1:
+  url: 'http://192.168.0.245/red1'
+ledszalad_haloszoba_green1:
+  url: 'http://192.168.0.245/green1'
+ledszalad_haloszoba_blue1:
+  url: 'http://192.168.0.245/blue1'
+ledszalad_haloszoba_attunes1:
+  url: 'http://192.168.0.245/fade'
+
+#################################### 4 4
+ledszalad_haloszoba_red2:
+  url: 'http://192.168.0.245/red2'
+ledszalad_haloszoba_green2:
+  url: 'http://192.168.0.245/green2'
+ledszalad_haloszoba_blue2:
+  url: 'http://192.168.0.245/blue2'
+ledszalad_haloszoba_attunes2:
+  url: 'http://192.168.0.245/strobe'
+
+#################################### 5 4
+ledszalad_haloszoba_red3:
+  url: 'http://192.168.0.245/red3'
+ledszalad_haloszoba_green3:
+  url: 'http://192.168.0.245/green3'
+ledszalad_haloszoba_blue3:
+  url: 'http://192.168.0.245/blue3'
+ledszalad_haloszoba_villogas1:
+  url: 'http://192.168.0.245/smooth' 
+  
+#################################### 6 4
+ledszalad_haloszoba_red4:
+  url: 'http://192.168.0.245/red4'
+ledszalad_haloszoba_green4:
+  url: 'http://192.168.0.245/green4'
+ledszalad_haloszoba_blue4:
+  url: 'http://192.168.0.245/blue4'
+ledszalad_haloszoba_villogas2:
+  url: 'http://192.168.0.245/flash'
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+  
+  
+  

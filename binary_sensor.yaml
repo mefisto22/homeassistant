@@ -1,0 +1,147 @@
+##################################################################################
+#                                      PING                                      #
+  - platform: ping
+    name: Router
+    host: !secret router_ip
+    count: 2
+    scan_interval: 120
+  - platform: ping
+    name: ILO 2
+    host: !secret ilo2_ip
+    count: 2
+    scan_interval: 120
+  - platform: ping
+    name: Server1
+    host: !secret server1_ip
+    count: 2
+    scan_interval: 120
+  - platform: ping
+    name: Server2
+    host: !secret server2_ip
+    count: 2
+    scan_interval: 120
+  - platform: ping
+    name: Server3
+    host: !secret server3_ip
+    count: 2
+    scan_interval: 120
+  - platform: ping
+    name: Server4
+    host: !secret server4_ip
+    count: 2
+    scan_interval: 120
+  - platform: ping
+    name: Server5
+    host: !secret server5_ip
+    count: 2
+    scan_interval: 120
+  - platform: ping
+    name: Nyomtató
+    host: !secret nyomtato_ip
+    count: 2
+    scan_interval: 120
+  - platform: ping
+    name: Philips TV
+    host: !secret philips_tv_ip
+    count: 2
+    scan_interval: 120
+  - platform: ping
+    name: Réka Laptop
+    host: !secret reka_laptop_ip
+    count: 2
+    scan_interval: 120
+  - platform: ping
+    name: Balázs Laptop
+    host: !secret balazs_laptop_ip
+    count: 2
+    scan_interval: 120
+  - platform: ping
+    name: Balázs iPhone-ja
+    host: !secret balazs_iphone_ip
+    count: 2
+    scan_interval: 120
+  - platform: ping
+    name: Réka iPhone-ja
+    host: !secret reka_iphone_ip
+    count: 2
+    scan_interval: 120
+  - platform: ping
+    name: Sonoff Basic Nyomtató
+    host: !secret sonoff_nyomtato_ip
+    count: 4
+    scan_interval: 120
+  - platform: ping
+    name: Motorola Apa
+    host: !secret motorola_apa_ip
+    count: 5
+    scan_interval: 120
+  - platform: ping
+    name: Huawei Réka
+    host: !secret huawei_reka_ip
+    count: 5
+    scan_interval: 120
+  - platform: ping
+    name: Motorola Anya
+    host: !secret motorola_anya_ip
+    count: 5
+    scan_interval: 120
+  - platform: ping
+    name: Huawei Régi
+    host: !secret huawei_regi_ip
+    count: 5
+    scan_interval: 120
+  - platform: ping
+    name: Balázs iPhone-ja VPN
+    host: !secret balazs_iphone_vpn_ip
+    count: 5
+    scan_interval: 120
+  - platform: ping
+    name: Réka iPhone-ja VPN
+    host: !secret reka_iphone_vpn_ip
+    count: 5
+    scan_interval: 120
+  - platform: ping
+    name: Sonoff Hálószoba
+    host: !secret sonoff_haloszobalampa_ip
+    count: 5
+    scan_interval: 120
+  - platform: ping
+    name: Sonoff Melegítő
+    host: !secret sonoff_melegito_ip
+    count: 5
+    scan_interval: 120
+  - platform: ping
+    name: Server6
+    host: !secret server6_ip
+    count: 2
+    scan_interval: 120
+  - platform: ping
+    name: Kinti hőmérő
+    host: !secret kinti_homero_ip
+    count: 2
+    scan_interval: 120
+  - platform: ping
+    name: Hálószoba led szalag
+    host: !secret haloszoba_ledszalag_ip
+    count: 2
+    scan_interval: 120
+#                                                                                #
+##################################################################################
+
+
+
+##################################################################################
+#                                      MQTT                                      #
+  - platform: mqtt
+    name: Nyomógomb piros
+    expire_after: 1
+    state_topic: "nyomogomb1"
+    payload_on: "Gomb helyzete: Gomb 1 Megnyomva"
+    
+  - platform: mqtt
+    name: Nyomógomb fehér
+    expire_after: 1
+    state_topic: "nyomogomb2"
+    payload_on: "Gomb helyzete: Gomb 2 Megnyomva"
+#                                                                                #
+##################################################################################

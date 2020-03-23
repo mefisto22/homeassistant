@@ -1,0 +1,25 @@
+# You can whitelist files/folders with !, these will not be ignored.
+!*.yaml
+!.gitignore
+!*.md
+
+# Ignore folders.
+.storage
+.cloud
+.google.token
+.HA_VERSION
+.homekit.state
+.ios.conf
+.shopping_list.json
+.spotify-token-cache
+ssh
+tmp
+www/kepek
+ip_bans.yaml
+secrets.yaml
+known_devices.yaml
+android_ip_webcam.yaml
+home-assistant_v2.db
+home-assistant.log
+home-assistant_v2.db-shm
+home-assistant_v2.db-wal

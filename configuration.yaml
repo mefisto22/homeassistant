@@ -1,0 +1,163 @@
+##################################################################################
+#                                  DEFAULT                                       #
+
+default_config:
+
+http:
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - 192.168.0.202
+    - 192.168.0.203
+    - 192.168.0.205
+    
+#                                                                                #
+##################################################################################
+
+
+##################################################################################
+#                               FELOLVASÁS                                       #
+
+### GOOGLE ### 
+tts:
+  - platform: google_translate
+    cache: true
+    cache_dir: /tmp/tts
+    time_memory: 300
+    base_url: !secret google_tts_base_url
+    service_name: google_say
+    language: 'hu'
+    
+### SZÖVEG BEMONDÁS HUAWEIREKA ###
+notify:
+ - name: test
+   platform: lannouncer
+   host: !secret huawei_reka_ip
+   
+### VLC TELNET ###
+media_player:
+  - platform: vlc_telnet
+    name: VLC balazsnotebook
+    host: !secret balazs_laptop_ip
+    port: 4212 
+    password: !secret vlc_telnet
+#                                                                                #
+##################################################################################
+
+
+##################################################################################
+#                          TARTALMAZÓ MAPPÁK                                     #
+
+#android_ip_webcam: !include android_ip_webcam.yaml  
+automation: !include automations.yaml
+binary_sensor: !include binary_sensor.yaml
+frontend:
+  themes: !include_dir_merge_named themes/
+group: !include groups.yaml
+homeassistant:
+  customize: !include customize.yaml
+rest_command: !include rest_command.yaml
+map:
+sensor: !include sensor.yaml      
+script: !include scripts.yaml
+shopping_list:
+switch: !include switch.yaml
+
+#                                                                                #
+##################################################################################
+
+
+# SPEEDTEST ###############################################################     
+speedtestdotnet:
+  scan_interval:
+    minutes: 30
+  monitored_conditions:
+    - ping
+    - download
+    - upload
+
+
+# DARK SKY IDŐJÁRÁS ########################################################
+weather:
+  - platform: darksky
+    api_key: !secret darksky_api
+    name: Időjárás
+    mode: daily
+
+
+# HÁLÓSZOBA TERMOSZTÁT #####################################################
+climate:
+  - platform: generic_thermostat
+    name: Hálószoba melegítő
+    heater: switch.melegito
+    target_sensor: sensor.haloszoba_homerseklet
+    cold_tolerance: 2.5
+
+
+# PIHOLE ###################################################################
+pi_hole:
+  - host: '192.168.0.202'
+    api_key: !secret pihole_api
+
+
+# ICLOUD ################################################################### 
+# icloud:
+  # - username: !secret icloud_username
+    # password: !secret icloud_jelszo
+    # max_interval: 5
+    # with_family: true
+
+
+# SPOTIFY ###################################################################
+spotify:
+  client_id: !secret spotify_client_id
+  client_secret: !secret spotify_client_secret
+
+
+# APPLE HOMEKIT #############################################################
+homekit:
+  filter:
+    include_entities:
+      - sensor.haloszoba_homerseklet
+      - sensor.nappali_homerseklet
+      - sensor.kinti_homerseklet
+      - sensor.haloszoba_paratartalom
+      - sensor.nappali_paratartalom
+      - sensor.kinti_paratartalom
+      - switch.melegito
+      - switch.haloszoba_lampa
+      - switch.nyomtato
+      - climate.haloszoba_melegito
+      - switch.haloszoba_led_szalag
+      - script.haloszoba_kikapcsolas
+      - script.philips_tv_ebresztes
+      - script.philips_tv_kikapcsolas
+      
+
+  
+  
+# SHELL COMMAND #############################################################
+shell_command:
+  tv_ebresztes: !secret tv_ebresztes
+  sipolas: curl "http://192.168.0.116/control?cmd=tone,5,1300,200"
+  
+
+    
+    
+# IDŐZÍTŐ ###################################################################
+timer:
+  philips_tv:
+    icon: mdi:television
+input_datetime:
+  only_time:
+    name: philips_tv_kikapcsolas
+    has_date: false
+    has_time: true
+    
+    
+# INFLUXDB ##################################################################   
+influxdb:
+  host: !secret hassio_ip
+  port: 8086
+  database: !secret influxdb_db
+  max_retries: 3
+  default_measurement: state

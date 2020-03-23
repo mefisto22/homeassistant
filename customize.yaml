@@ -1,0 +1,35 @@
+# IDŐ ÉS DÁTUM #######################################################
+sensor.time:
+  friendly_name: Idő
+sensor.date:
+  friendly_name: Dátum
+  
+# SPEEDTEST ###########################################################
+sensor.speedtest_upload:
+  friendly_name: Feltöltés
+sensor.speedtest_download:
+  friendly_name: Letöltés
+sensor.speedtest_ping:
+  friendly_name: Ping
+ 
+ 
+# TORRENT ############################################################## 
+sensor.qbittorrent_down_speed:
+  friendly_name: Letöltés sebessége
+sensor.qbittorrent_up_speed:
+  friendly_name: Feltöltés sebessége
+sensor.qbittorrent_status:
+  friendly_name: Állapot
+  
+  
+# SONOFF KAPCSOLÓK #####################################################
+switch.haloszoba_lampa:
+  friendly_name: Hálószoba lámpa
+  icon: mdi:lightbulb
+switch.nyomato:
+  friendly_name: Nyomtató
+  icon: mdi:printer
+switch.veszjelzo:
+  friendly_name: Vészjelző lámpa
+  icon: mdi:lightbulb
+
